@@ -20,7 +20,7 @@ axiosClient.interceptors.response.use(
     }
   );
 
-axiosClient.defaults.baseURL = process.env.REACT_APP_LOCAL; 
+axiosClient.defaults.baseURL = 'https://blog-app-server-hwy8-byck7ei78-priyansh19csu225.vercel.app'; 
   
 axiosClient.defaults.headers = {
   'Content-Type': 'application/json',
