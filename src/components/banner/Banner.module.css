@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    height: 400px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+  }
+  
+  .textContainer {
+    width: 50%;
+    padding-right: 16px;
+  }
+  
+  .imageContainer {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .image {
+    max-width: 70%;
+    max-height: 70%;
+  }
+  
+  .btn{
+    margin-top: 2rem !important;
+  }
+  
+  .mainText{
+    margin-bottom: 2rem !important;
+  }
