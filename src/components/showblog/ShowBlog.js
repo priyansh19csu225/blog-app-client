@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Button,
   CardMedia,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -21,15 +22,16 @@ import URL from "../../constants/urls";
 
 const ShowBlog = () => {
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const blogId = searchParams.get("id");
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const blogId = useMemo(() => searchParams.get("id"), [searchParams] );
   const [blog, setBlog] = useState(null);
+  const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!blogId) return;
+    if (!blogId ) return;
     const controller = new AbortController();
-
+    setLoading(true)
     getRequest(`${API_URL.FIND_ONE}?id=${blogId}`, {
       signal: controller.signal,
     })
@@ -37,7 +39,7 @@ const ShowBlog = () => {
         setBlog(res.doc);
         console.log(res.doc);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(setLoading(false));
     return () => {
       controller.abort();
     };
@@ -68,7 +70,8 @@ const ShowBlog = () => {
 
   return (
     <Container>
-      <div className={styles.root}>
+      {loading  ? <CircularProgress color="primary" size="10rem"/> : (
+        <div className={styles.root}>
         <div className={styles.header}>
           <div>
             <Typography variant="h6" component="p">
@@ -115,6 +118,7 @@ const ShowBlog = () => {
           </Typography>
         </div>
       </div>
+        )}
       <Dialog open={open} onClose={() => setOpen(false)}>
         {action === 1 && (
           <DialogContent>
